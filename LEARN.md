@@ -141,8 +141,12 @@ the contents from `id_rsa` created above.   Then add another called
 `SSH_USER` with the value `jason`.  Next is `SSH_HOST` for the address of
 our server.
 
-### Getting to run
-
+I went to my github homepage, clicked on the Packages tab, clicked on my
+'docker-image-github' package.  I connected the package to my repository.
+Then I went to it's
+[settings page](https://github.com/users/JasonGoemaat/packages/container/docker-image-github/settings).
+Under 'Manage Actions access' and 'Actions repository access' I clicked
+'Add Repository' and added my repository, then changed it's role to 'Write'.
 
 ### Update Fedora
 
@@ -172,4 +176,19 @@ other file systems in just this sort of scenario, but detecting errors doesn't
 do my any good in my use case if there's no way to fix them.   I'd rather it
 just let me delete or get rid of whatever was wrong.
 
-    
+# Other notes
+
+To not have to enter my ssh key password everytime I login to fedora or push
+my git repo, I made sure the 'OpenSSH Authentication Agent' service
+was running and ran this to add my keys to it:
+
+    ssh-add C:\Users\Jason\.ssh\id_ed25519
+    ssh-add C:\Users\Jason\.ssh\id_rsa
+
+The service was disabled to start with, I used the GUI to enable it and set
+it to start automatically.   These commands could be used to set it to
+start manually and start it supposedly:
+
+    Set-Service -StartupType Manual
+    Start-Service ssh-agent
+    Get-Service ssh-agent
