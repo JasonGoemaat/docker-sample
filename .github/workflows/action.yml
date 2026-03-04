@@ -44,7 +44,7 @@ jobs:
           ssh-keyscan -H -p 2223 ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy to server
         run: |
-          ssh jason@goemaat.com -p 2223 "docker pull ${{ env.IMAGE_NAME }} && docker run -d --name your-container -p 3000:3000 ${{ env.IMAGE_NAME }}"
+          ssh jason@goemaat.com -p 2223 "docker pull ${{ env.IMAGE_NAME }} && docker run -d --name sample -p 3000:3000 ${{ env.IMAGE_NAME }}"
       - name: cleanup
         run: |
           rm -rf ~/.ssh
