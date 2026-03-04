@@ -22,6 +22,10 @@
 		to your new<br />SvelteKit app
 	</h1>
 
+	<h1>Simple Change</h1>
+
+	<p>Testing my github action deploy...</p>
+
 	<h2>
 		try editing <strong>src/routes/+page.svelte</strong>
 	</h2>
