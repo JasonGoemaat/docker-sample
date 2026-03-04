@@ -41,7 +41,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -Hp 2223 ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H -p 2223 ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       - name: Deploy to server
         run: |
           ssh jason@goemaat.com -p 2223 "docker pull ${{ env.IMAGE_NAME }} && docker run -d --name your-container -p 3000:3000 ${{ env.IMAGE_NAME }}"
