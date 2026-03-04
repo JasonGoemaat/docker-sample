@@ -141,11 +141,35 @@ the contents from `id_rsa` created above.   Then add another called
 `SSH_USER` with the value `jason`.  Next is `SSH_HOST` for the address of
 our server.
 
+### Getting to run
+
+
 ### Update Fedora
 
-I upgraded fedora since my version was out of support...
+I tried to upgrade fedora since my version was out of support...
 
     sudo dnf system-upgrade download --releasever=43 --allowerasing
     sudo dnf system-upgrade reboot
+
+Somehow my btrfs partition became corrupt.   It would mount in readonly
+mode and I tried for a few hours to fix it, to no avail.   I could boot and
+access it in read-only mode, but the check command returned errors with inodes
+and scrubbing/repairing did nothing.   I tried with a Fedora live cd so I could
+mount it separately or unmount it and that didn't work either.   Finally
+I copied the files I wanted to keep to a USB drive and just re-installed.  
+
+This time I used a smaller partition, since shrink wouldn't work when there was
+corruption.   That way I could create other partitions for other linux installs
+if I wanted.  If this same problem happened again I could just install
+Fedora into a new parition and copy the files at leasure since I could mount
+it read-only with seemingly no problems other than btrfs commands not working.
+
+I HATE THAT!   I've had a few drive failures in my 30+ years of using linux
+(and Windows and MAC for that matter), but this is the first time I've had
+some kind of file system corruption when the drive seems perfectly fine.  I'm
+considering dropping btrfs for that reason.   It's supposed to be better than
+other file systems in just this sort of scenario, but detecting errors doesn't
+do my any good in my use case if there's no way to fix them.   I'd rather it
+just let me delete or get rid of whatever was wrong.
 
     
