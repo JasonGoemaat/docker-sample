@@ -6,7 +6,7 @@ on:
       - main
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.actor }}/docker-image-github:latest
+  IMAGE_NAME: jasongoemaat/docker-image-github:latest
 
 jobs:
   publish:
