@@ -53,6 +53,12 @@ Now that it's been run for the first time, it can be started later with:
 
 ## Build and run from github container registry
 
+Fedora contains podman which is pretty much just like docker.  I installed
+this to enable the docker cli compatability layer so I can use 'docker'
+isntead of 'podman' in the shell:
+
+    sudo dnf install podman-docker
+
 From: https://www.youtube.com/watch?v=f5AlQE0i5m0
 
 Create PAT using [this link](https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqbkVUcmluRDNUZFR5R2xTcmM4cFNHbFM4YUtrd3xBQ3Jtc0tsUGFpRVhZaENSeC00WEdHUURNam1jYkF3YUIzMzZUd0MyY1ltcnlZTFFkUWVqWDc4TmN6VVVEMmJhdUdibXNoc1RKakc4ZmR3MkNOdUhrU1h3UGtOQ1Q2WVd2VE5VdE0tWkxqc1pNaXlpM2k2ZEtsdw&q=https%3A%2F%2Fgithub.com%2Fsettings%2Ftokens%2Fnew%3Fscopes%3Dwrite%3Apackages%2Cread%3Apackages%2Cdelete%3Apackages&v=f5AlQE0i5m0) -
@@ -98,6 +104,19 @@ Then start it:
 
 At this point it works, I can go to http://fedora:3000
 
+Then I added this location to my `/etc/nginx/conf.d/goemaat.conf`:
+
+    location /sample/ {
+        proxy_pass "http://127.0.0.1:3000/";
+    }
+
+And I had to configure SELinux to allow nginx to connect externally or
+I got a 502 bad gateway response:
+
+    sudo setsebool -P httpd_can_network_connect 1
+
+Then I can access the site with `https://goemaat.com/sample`
+
 ## Github Action
 
 All files including `docker-compose.yml` and ones created here are stored on
@@ -115,5 +134,18 @@ Copy private key (`id_rsa`) to clipboard:
 
     cat id_rsa
 
-Go to github repository, then 
+Go to github repository, then 'Settings' tab at top-right.  Then under
+'Security', go to 'Secrets and variables', then 'Actions'.  Then click
+'New repository secret'.   Use `SSH_PRIVATE_KEY` as the name and paste
+the contents from `id_rsa` created above.   Then add another called
+`SSH_USER` with the value `jason`.  Next is `SSH_HOST` for the address of
+our server.
 
+### Update Fedora
+
+I upgraded fedora since my version was out of support...
+
+    sudo dnf system-upgrade download --releasever=43 --allowerasing
+    sudo dnf system-upgrade reboot
+
+    
